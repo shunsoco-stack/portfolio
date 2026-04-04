@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOIR TABLE | 大人のための隠れ家レストラン</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d08a;
+      --dark: #0e0e0e;
+      --dark2: #1a1a1a;
+      --dark3: #242424;
+      --cream: #f5f0e8;
+      --text-light: #d4cfc6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Serif JP', serif;
+      background: var(--dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ===== HERO ===== */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.35);
+      transform: scale(1.05);
+      animation: slowzoom 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes slowzoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.12); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      color: var(--text-light);
+      margin-bottom: 60px;
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      margin: 0 auto 40px;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      padding: 16px 48px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+      z-index: -1;
+    }
+
+    .btn-gold:hover { color: var(--dark); }
+    .btn-gold:hover::before { transform: scaleX(1); }
+
+    /* ===== CONCEPT ===== */
+    .concept {
+      padding: 140px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .concept-img {
+      position: relative;
+    }
+
+    .concept-img img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .concept-img::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 80%;
+      height: 80%;
+      border: 1px solid var(--gold);
+      z-index: -1;
+    }
+
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 32px;
+      color: #fff;
+    }
+
+    .section-title em { font-style: italic; color: var(--gold-light); }
+
+    .section-body {
+      font-size: 0.9rem;
+      line-height: 2.2;
+      color: var(--text-light);
+    }
+
+    /* ===== MENU ===== */
+    .menu-section {
+      background: var(--dark2);
+      padding: 120px 60px;
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      filter: brightness(0.6);
+    }
+
+    .menu-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.4);
+    }
+
+    .menu-card-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 40px 32px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    }
+
+    .menu-card-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .menu-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .menu-card-price {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+    }
+
+    .menu-card-desc {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-top: 12px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s;
+    }
+
+    .menu-card:hover .menu-card-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== ATMOSPHERE ===== */
+    .atmosphere {
+      padding: 120px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 240px 240px;
+      gap: 12px;
+      margin-top: 60px;
+    }
+
+    .photo-grid .big {
+      grid-row: 1 / 3;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.75);
+      transition: filter 0.4s;
+    }
+
+    .photo-grid img:hover { filter: brightness(1); }
+
+    /* ===== INFO ===== */
+    .info-section {
+      background: var(--dark2);
+      padding: 120px 60px;
+    }
+
+    .info-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .info-block h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--gold);
+      margin-bottom: 24px;
+      letter-spacing: 0.1em;
+    }
+
+    .info-row {
+      display: flex;
+      gap: 24px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.85rem;
+    }
+
+    .info-row dt {
+      color: var(--gold);
+      min-width: 80px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .info-row dd { color: var(--text-light); line-height: 1.8; }
+
+    /* ===== RESERVATION ===== */
+    .reservation {
+      padding: 120px 60px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--dark3) 0%, #1c1505 50%, var(--dark3) 100%);
+    }
+
+    .reservation p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      line-height: 2;
+      max-width: 500px;
+      margin: 24px auto 48px;
+    }
+
+    .tel-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .tel-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--text-light);
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      display: block;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #080808;
+      padding: 60px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .footer-address {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+      line-height: 2;
+    }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.2);
+      margin-top: 40px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .concept { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+      .concept-img::after { display: none; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-section, .atmosphere, .info-section, .reservation { padding: 80px 24px; }
+      .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .photo-grid .big { grid-row: auto; grid-column: 1 / 3; height: 280px; }
+      .photo-grid img { height: 180px; }
+      .info-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#" class="nav-logo">NOIR TABLE</a>
+    <ul class="nav-links">
+      <li><a href="#concept">Concept</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#atmosphere">Gallery</a></li>
+      <li><a href="#info">Access</a></li>
+      <li><a href="#reservation">Reserve</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Gastronomie Française</p>
+      <h1 class="hero-title">NOIR<br><em>TABLE</em></h1>
+      <p class="hero-subtitle">大人のための、静かな美食の夜</p>
+      <div class="hero-divider"></div>
+      <a href="#reservation" class="btn-gold">Reservation</a>
+    </div>
+  </section>
+
+  <!-- CONCEPT -->
+  <section class="concept" id="concept">
+    <div class="concept-img reveal">
+      <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80" alt="シェフ">
+    </div>
+    <div class="reveal">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">素材と向き合い、<br><em>静寂の中に</em><br>料理を描く。</h2>
+      <p class="section-body">
+        NOIR TABLEは、喧騒から離れた大人のための隠れ家レストランです。<br><br>
+        シェフは国内外の三つ星レストランで研鑽を積み、フランス料理の伝統と日本の四季が持つ美しさを融合させた独自のコースをご提供しています。<br><br>
+        選び抜かれた食材、精緻な技術、そして空間——すべてが一皿に宿る体験をお届けします。
+      </p>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="menu-header reveal">
+      <p class="section-label" style="justify-content:center">— Menu —</p>
+      <h2 class="section-title">季節のコース料理</h2>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="前菜">
+        <div class="menu-card-content">
+          <p class="menu-card-label">Entrée</p>
+          <p class="menu-card-name">季節の前菜</p>
+          <p class="menu-card-price">コースに含む</p>
+          <p class="menu-card-desc">旬の野菜と魚介を組み合わせた、色彩豊かな一皿。産地直送の素材を最大限に活かした繊細な仕上がり。</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1544025162-d76538780cfa?w=600&q=80" alt="メイン">
+        <div class="menu-card-content">
+          <p class="menu-card-label">Plat Principal</p>
+          <p class="menu-card-name">本日のメイン</p>
+          <p class="menu-card-price">コースに含む</p>
+          <p class="menu-card-desc">厳選した国産黒毛和牛と地元産野菜を組み合わせたメインディッシュ。シェフが丁寧に仕上げます。</p>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80" alt="デザート">
+        <div class="menu-card-content">
+          <p class="menu-card-label">Dessert</p>
+          <p class="menu-card-name">デザート</p>
+          <p class="menu-card-price">コースに含む</p>
+          <p class="menu-card-desc">パティシエによる季節のデザート。見た目も美しく、食後の余韻まで丁寧に設計されています。</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:60px;" class="reveal">
+      <p style="font-size:0.8rem; color:var(--text-light); letter-spacing:0.1em; margin-bottom:12px;">Dîner Course</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; color:var(--gold);">¥18,000〜</p>
+      <p style="font-size:0.75rem; color:rgba(255,255,255,0.3); margin-top:8px;">サービス料・税込</p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="atmosphere" id="atmosphere">
+    <div class="reveal">
+      <p class="section-label" style="justify-content:center">— Gallery —</p>
+      <h2 class="section-title">空間と、光と。</h2>
+    </div>
+    <div class="photo-grid">
+      <div class="big">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80" alt="店内">
+      </div>
+      <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=500&q=80" alt="テーブル">
+      <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=500&q=80" alt="ワイン">
+      <img src="https://images.unsplash.com/photo-1550966871-3ed3cbe9b600?w=500&q=80" alt="料理">
+      <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=500&q=80" alt="シェフ">
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="info-section" id="info">
+    <div class="info-inner">
+      <div class="reveal">
+        <h3>Access</h3>
+        <dl>
+          <div class="info-row">
+            <dt>住所</dt>
+            <dd>東京都港区南青山3-X-X<br>〇〇ビル B1F</dd>
+          </div>
+          <div class="info-row">
+            <dt>最寄駅</dt>
+            <dd>表参道駅 A4出口 徒歩5分</dd>
+          </div>
+          <div class="info-row">
+            <dt>営業時間</dt>
+            <dd>Dinner 18:00〜23:00<br>（L.O. 21:00）</dd>
+          </div>
+          <div class="info-row">
+            <dt>定休日</dt>
+            <dd>月曜・火曜日</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="reveal">
+        <h3>Information</h3>
+        <dl>
+          <div class="info-row">
+            <dt>席数</dt>
+            <dd>全16席（完全予約制）</dd>
+          </div>
+          <div class="info-row">
+            <dt>予算</dt>
+            <dd>¥18,000〜¥30,000 / お一人様</dd>
+          </div>
+          <div class="info-row">
+            <dt>ドレスコード</dt>
+            <dd>スマートカジュアル以上</dd>
+          </div>
+          <div class="info-row">
+            <dt>お支払い</dt>
+            <dd>現金 / カード各種</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVATION -->
+  <section class="reservation" id="reservation">
+    <div class="reveal">
+      <p class="section-label" style="justify-content:center">— Reserve —</p>
+      <h2 class="section-title">ご予約</h2>
+      <p>完全予約制となっております。<br>お電話またはメールにてお気軽にお問い合わせください。<br>ご来店を心よりお待ちしております。</p>
+      <span class="tel-num">03-XXXX-XXXX</span>
+      <span class="tel-label">Reservation Line — 10:00〜18:00</span>
+      <br>
+      <a href="mailto:info@noirtable.jp" class="btn-gold">Email Inquiry</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo">NOIR TABLE</p>
+    <p class="footer-address">
+      東京都港区南青山3-X-X 〇〇ビル B1F<br>
+      Tel: 03-XXXX-XXXX　|　info@noirtable.jp
+    </p>
+    <p class="footer-copy">© 2026 NOIR TABLE. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

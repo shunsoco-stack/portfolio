@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLOOM HAIR SALON | 表参道の美容室</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --rose: #c8917a;
+      --rose-light: #e8c4b5;
+      --blush: #f5ede8;
+      --ivory: #faf7f4;
+      --dark: #2c2420;
+      --brown: #6b4c3b;
+      --text: #4a3830;
+      --text-light: #8c7060;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--ivory);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(250, 247, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200, 145, 122, 0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--rose); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--rose); }
+
+    .nav-reserve {
+      background: var(--rose);
+      color: #fff !important;
+      padding: 10px 24px;
+      transition: background 0.3s !important;
+    }
+
+    .nav-reserve:hover { background: var(--brown) !important; color: #fff !important; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--rose);
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--rose);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--dark);
+      margin-bottom: 28px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .hero-body {
+      font-size: 0.9rem;
+      line-height: 2.2;
+      color: var(--text-light);
+      max-width: 420px;
+      margin-bottom: 52px;
+    }
+
+    .btn-rose {
+      display: inline-block;
+      background: var(--rose);
+      color: #fff;
+      padding: 18px 48px;
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      transition: all 0.3s;
+      align-self: flex-start;
+    }
+
+    .btn-rose:hover { background: var(--brown); }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1.5px solid var(--rose);
+      color: var(--rose);
+      padding: 17px 48px;
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      transition: all 0.3s;
+      margin-left: 16px;
+    }
+
+    .btn-outline:hover { background: var(--rose); color: #fff; }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(200,145,122,0.25);
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--rose);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 40px;
+      left: -20px;
+      background: var(--ivory);
+      padding: 24px 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    .hero-badge p {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--rose);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .hero-badge strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--dark);
+    }
+
+    /* ===== SECTION COMMON ===== */
+    .section-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: var(--rose);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--rose); }
+
+    .section-h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    .section-h2 em { font-style: italic; color: var(--rose); }
+
+    /* ===== MENU ===== */
+    .menu-wrap {
+      background: var(--blush);
+      padding: 120px 80px;
+    }
+
+    .menu-wrap .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .menu-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 72px;
+    }
+
+    .menu-header p {
+      font-size: 0.9rem;
+      line-height: 2.2;
+      color: var(--text-light);
+    }
+
+    .menu-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+
+    .menu-item {
+      background: var(--ivory);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      transition: background 0.3s;
+    }
+
+    .menu-item:hover { background: #fff; }
+
+    .menu-item-info h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .menu-item-info p {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    .menu-item-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--rose);
+      white-space: nowrap;
+    }
+
+    /* ===== STYLISTS ===== */
+    .stylists {
+      padding: 120px 80px;
+    }
+
+    .stylists .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .stylists-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .stylists-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .stylist-card {
+      text-align: center;
+    }
+
+    .stylist-img {
+      position: relative;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .stylist-img img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .stylist-card:hover .stylist-img img { transform: scale(1.05); }
+
+    .stylist-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--rose);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .stylist-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    .stylist-bio {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      line-height: 1.9;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-wrap {
+      background: var(--dark);
+      padding: 100px 0;
+      overflow: hidden;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 0 80px;
+    }
+
+    .gallery-header .section-tag { justify-content: center; }
+    .gallery-header .section-tag::before { display: none; }
+
+    .gallery-header .section-h2 { color: var(--ivory); }
+
+    .gallery-strip {
+      display: flex;
+      gap: 12px;
+      padding: 0 60px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .gallery-strip::-webkit-scrollbar { display: none; }
+
+    .gallery-strip img {
+      width: 280px;
+      height: 380px;
+      object-fit: cover;
+      flex-shrink: 0;
+      transition: transform 0.4s;
+    }
+
+    .gallery-strip img:hover { transform: scale(1.02); }
+
+    /* ===== INFO ===== */
+    .info-wrap {
+      padding: 120px 80px;
+      background: var(--blush);
+    }
+
+    .info-wrap .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .info-table { width: 100%; }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(200,145,122,0.2);
+      font-size: 0.85rem;
+    }
+
+    .info-row dt { color: var(--rose); font-size: 0.78rem; letter-spacing: 0.05em; }
+    .info-row dd { color: var(--text); line-height: 1.8; }
+
+    .map-box {
+      background: #e0d6d0;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== RESERVE BANNER ===== */
+    .reserve-banner {
+      background: var(--rose);
+      padding: 100px 80px;
+      text-align: center;
+    }
+
+    .reserve-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .reserve-banner p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 2;
+      margin-bottom: 48px;
+    }
+
+    .btn-white {
+      display: inline-block;
+      background: #fff;
+      color: var(--rose);
+      padding: 18px 56px;
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .btn-white:hover { background: var(--dark); color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      padding: 60px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--ivory);
+      letter-spacing: 0.15em;
+    }
+
+    .footer-logo span { color: var(--rose); }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 60px 24px; }
+      .hero-right { height: 60vw; min-height: 300px; }
+      .hero-badge { left: 16px; }
+      .menu-wrap, .stylists, .info-wrap { padding: 80px 24px; }
+      .menu-header { grid-template-columns: 1fr; }
+      .menu-list { grid-template-columns: 1fr; }
+      .stylists-grid { grid-template-columns: 1fr; }
+      .info-wrap .inner { grid-template-columns: 1fr; }
+      .reserve-banner { padding: 80px 24px; }
+      footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">BLOOM<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#stylists">Stylists</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#info">Access</a></li>
+      <li><a href="#reserve" class="nav-reserve">予約する</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Hair Salon — Omotesando</p>
+      <h1 class="hero-title">あなたらしい<br><em>美しさ</em>を、<br>引き出す。</h1>
+      <p class="hero-body">
+        BLOOMは、お客様一人ひとりの個性と魅力を最大限に引き出すヘアサロンです。豊富な経験を持つスタイリストが、理想のスタイルをご提案します。
+      </p>
+      <div>
+        <a href="#reserve" class="btn-rose">今すぐ予約</a>
+        <a href="#menu" class="btn-outline">メニューを見る</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <span class="stat-num">1,200+</span>
+          <p class="stat-label">月間来店数</p>
+        </div>
+        <div>
+          <span class="stat-num">4.9</span>
+          <p class="stat-label">平均評価（Google）</p>
+        </div>
+        <div>
+          <span class="stat-num">8年</span>
+          <p class="stat-label">表参道での実績</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=900&q=80" alt="サロン">
+      <div class="hero-badge">
+        <p>Reservation</p>
+        <strong>当日予約OK</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-wrap" id="menu">
+    <div class="inner">
+      <div class="menu-header">
+        <div class="reveal">
+          <p class="section-tag">Service Menu</p>
+          <h2 class="section-h2">メニュー &amp;<br><em>料金</em></h2>
+        </div>
+        <p class="reveal" style="font-size:0.85rem;color:var(--text-light);line-height:2.2">
+          すべてのメニューはカウンセリングを含みます。お客様のライフスタイルや髪質に合わせた最適なご提案をいたします。
+        </p>
+      </div>
+      <div class="menu-list">
+        <div class="menu-item reveal">
+          <div class="menu-item-info">
+            <h4>カット</h4>
+            <p>シャンプー・ブロー込み<br>カウンセリング付き</p>
+          </div>
+          <span class="menu-item-price">¥7,700〜</span>
+        </div>
+        <div class="menu-item reveal">
+          <div class="menu-item-info">
+            <h4>カラー</h4>
+            <p>全体カラー・リタッチ<br>ダメージケア処理込み</p>
+          </div>
+          <span class="menu-item-price">¥12,100〜</span>
+        </div>
+        <div class="menu-item reveal">
+          <div class="menu-item-info">
+            <h4>パーマ</h4>
+            <p>デジタルパーマ・コールドパーマ<br>スタイリング付き</p>
+          </div>
+          <span class="menu-item-price">¥16,500〜</span>
+        </div>
+        <div class="menu-item reveal">
+          <div class="menu-item-info">
+            <h4>トリートメント</h4>
+            <p>集中補修・サロン専売品使用<br>ホームケア相談込み</p>
+          </div>
+          <span class="menu-item-price">¥5,500〜</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STYLISTS -->
+  <section class="stylists" id="stylists">
+    <div class="inner">
+      <div class="stylists-header reveal">
+        <p class="section-tag" style="justify-content:center">— Our Team —</p>
+        <h2 class="section-h2" style="text-align:center">スタイリスト</h2>
+      </div>
+      <div class="stylists-grid">
+        <div class="stylist-card reveal">
+          <div class="stylist-img">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80" alt="スタイリスト">
+          </div>
+          <p class="stylist-role">Top Stylist</p>
+          <p class="stylist-name">山田 花子</p>
+          <p class="stylist-bio">パリ・ロンドンで修業後、表参道でキャリアをスタート。外国人風カラーとカットが得意。</p>
+        </div>
+        <div class="stylist-card reveal">
+          <div class="stylist-img">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80" alt="スタイリスト">
+          </div>
+          <p class="stylist-role">Senior Stylist</p>
+          <p class="stylist-name">佐藤 美咲</p>
+          <p class="stylist-bio">デジタルパーマの第一人者。トレンドを取り入れながら扱いやすいスタイルを提案。</p>
+        </div>
+        <div class="stylist-card reveal">
+          <div class="stylist-img">
+            <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=500&q=80" alt="スタイリスト">
+          </div>
+          <p class="stylist-role">Stylist</p>
+          <p class="stylist-name">鈴木 彩</p>
+          <p class="stylist-bio">お客様一人ひとりのライフスタイルを大切にしたヘアデザインを提案します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-wrap" id="gallery">
+    <div class="gallery-header reveal">
+      <p class="section-tag">— Gallery —</p>
+      <h2 class="section-h2">施術スタイル</h2>
+    </div>
+    <div class="gallery-strip">
+      <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1620331311520-246422fd82f9?w=400&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80" alt="">
+      <img src="https://images.unsplash.com/photo-1614159369004-5c2a01626e03?w=400&q=80" alt="">
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="info-wrap" id="info">
+    <div class="inner">
+      <div class="reveal">
+        <p class="section-tag">Access</p>
+        <h2 class="section-h2">アクセス &amp;<br><em>営業情報</em></h2>
+        <dl class="info-table" style="margin-top:40px">
+          <div class="info-row">
+            <dt>住所</dt>
+            <dd>東京都渋谷区神宮前4-X-X<br>〇〇ビル 2F</dd>
+          </div>
+          <div class="info-row">
+            <dt>最寄駅</dt>
+            <dd>表参道駅 B2出口 徒歩3分</dd>
+          </div>
+          <div class="info-row">
+            <dt>営業時間</dt>
+            <dd>平日 10:00〜20:00<br>土日祝 9:00〜19:00</dd>
+          </div>
+          <div class="info-row">
+            <dt>定休日</dt>
+            <dd>毎週水曜日</dd>
+          </div>
+          <div class="info-row">
+            <dt>TEL</dt>
+            <dd>03-XXXX-XXXX</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="reveal">
+        <div class="map-box">Map Placeholder</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVE -->
+  <section class="reserve-banner" id="reserve">
+    <div class="reveal">
+      <h2>ご予約はこちらから</h2>
+      <p>
+        オンライン予約は24時間受付中。<br>当日予約もお気軽にどうぞ。<br>初めての方はカウンセリング無料。
+      </p>
+      <a href="tel:03-XXXX-XXXX" class="btn-white">オンライン予約 / お電話</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo">BLOOM<span>.</span></p>
+    <p class="footer-copy">© 2026 BLOOM HAIR SALON. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
