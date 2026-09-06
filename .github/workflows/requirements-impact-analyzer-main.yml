@@ -1,0 +1,74 @@
+name: Requirements Impact Analyzer Release QA
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'requirements-impact-analyzer/**'
+      - '.github/workflows/requirements-impact-analyzer-main.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  browser-qa-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run checks
+        working-directory: requirements-impact-analyzer
+        run: npm run check
+
+      - name: Install Playwright
+        run: |
+          npm --prefix requirements-impact-analyzer install --no-save --package-lock=false playwright@1.55.0
+          cd requirements-impact-analyzer
+          npx playwright install --with-deps chromium
+
+      - name: Start local server
+        run: |
+          python3 -m http.server 4173 --directory requirements-impact-analyzer >/tmp/requirements-impact-server.log 2>&1 &
+          for i in {1..30}; do
+            curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/requirements-impact-server.log
+          exit 1
+
+      - name: Run browser QA and generate screenshots
+        run: node requirements-impact-analyzer/scripts/screenshots.mjs
+
+      - name: Commit screenshots when changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add requirements-impact-analyzer/docs/screenshots/*.png
+          if git diff --cached --quiet; then
+            echo 'Screenshots are unchanged.'
+          else
+            git commit -m 'docs: README用スクリーンショットを生成 [skip ci]'
+            git push origin HEAD:main
+          fi
+
+      - name: Package source
+        run: |
+          zip -r requirements-impact-analyzer.zip requirements-impact-analyzer \
+            -x 'requirements-impact-analyzer/.git/*' \
+            -x 'requirements-impact-analyzer/node_modules/*'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: requirements-impact-analyzer
+          path: requirements-impact-analyzer.zip
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,18 @@
+import { readFile, writeFile, mkdir, copyFile, rm } from 'node:fs/promises';
+import path from 'node:path';
+import process from 'node:process';
+const root=path.resolve(process.cwd());
+const dist=path.join(root,'dist');
+await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});
+let html=await readFile(path.join(root,'index.html'),'utf8');
+let css=await readFile(path.join(root,'styles.css'),'utf8');
+let analyzer=await readFile(path.join(root,'lib/analyzer.js'),'utf8');
+let app=await readFile(path.join(root,'app.js'),'utf8');
+css=css.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,' ').replace(/\s*([{}:;,>])\s*/g,'$1');
+analyzer=analyzer.replace(/^export\s+(?=(function|const|let|class)\b)/gm,'');
+app=app.replace(/^import\s+\{[^}]+\}\s+from\s+'\.\/lib\/analyzer\.js';\s*\n/m,'');
+html=html.replace('<link rel="stylesheet" href="./styles.css">',()=>`<style>${css}</style>`).replace('<script type="module" src="./app.js"></script>',()=>`<script type="module">\n${analyzer}\n${app}\n</script>`);
+await writeFile(path.join(dist,'index.html'),html);
+for(const file of ['favicon.svg','manifest.webmanifest','vercel.json'])await copyFile(path.join(root,file),path.join(dist,file));
+await writeFile(path.join(dist,'sw.js'),"const C='requirements-impact-analyzer-v1',A=['/','/index.html','/favicon.svg','/manifest.webmanifest'];self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(A)));self.skipWaiting()});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))));self.clients.claim()});self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(c=>c||fetch(e.request).then(r=>{let x=r.clone();caches.open(C).then(c=>c.put(e.request,x));return r}).catch(()=>caches.match('/index.html'))))});");
+console.log(`Built ${path.relative(root,dist)}`);

@@ -1,0 +1,15 @@
+{
+  "name": "requirements-impact-analyzer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "要件変更から画面・API・DB・テストへの影響を可視化するブラウザ完結型Webアプリ",
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "check": "node --check app.js && node --check lib/analyzer.js && npm test && npm run build"
+  },
+  "engines": {"node": ">=20"},
+  "license": "MIT"
+}

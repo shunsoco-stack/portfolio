@@ -1,0 +1,43 @@
+name: Requirements Impact Analyzer CI
+
+on:
+  push:
+    branches:
+      - feat/requirements-impact-analyzer
+    paths:
+      - 'requirements-impact-analyzer/**'
+      - '.github/workflows/requirements-impact-analyzer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run checks
+        working-directory: requirements-impact-analyzer
+        run: npm run check
+
+      - name: Package source
+        run: |
+          zip -r requirements-impact-analyzer.zip requirements-impact-analyzer \
+            -x 'requirements-impact-analyzer/.git/*' \
+            -x 'requirements-impact-analyzer/node_modules/*'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: requirements-impact-analyzer
+          path: requirements-impact-analyzer.zip
+          if-no-files-found: error
+          retention-days: 30
