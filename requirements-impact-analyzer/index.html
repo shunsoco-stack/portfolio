@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="要件の変更点を比較し、画面・API・DB・認証・テスト・運用への影響範囲と対応タスクを自動整理するブラウザ完結型Webアプリです。">
+  <meta name="theme-color" content="#07111f">
+  <meta property="og:title" content="要件変更影響分析">
+  <meta property="og:description" content="変更点から、画面・API・DB・テストへの影響を可視化。">
+  <meta property="og:type" content="website">
+  <title>要件変更影響分析</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.1 3.2a3.9 3.9 0 0 1-2.5 2.5L5 10l3.4 1.2a3.9 3.9 0 0 1 2.5 2.5L12 17l1.1-3.3a3.9 3.9 0 0 1 2.5-2.5L19 10l-3.4-1.3a3.9 3.9 0 0 1-2.5-2.5L12 3Z"/><path d="m19 15-.5 1.4a2.2 2.2 0 0 1-1.4 1.4l-1.5.5 1.5.5a2.2 2.2 0 0 1 1.4 1.4l.5 1.5.5-1.5a2.2 2.2 0 0 1 1.4-1.4l1.5-.5-1.5-.5a2.2 2.2 0 0 1-1.4-1.4L19 15Z"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-6h5v6"/></symbol>
+    <symbol id="icon-input" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></symbol>
+    <symbol id="icon-diff" viewBox="0 0 24 24"><path d="M5 4v16M19 4v16M8 8h7M8 16h7"/><path d="m13 5 3 3-3 3M11 13l-3 3 3 3"/></symbol>
+    <symbol id="icon-network" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-3h14v3"/></symbol>
+    <symbol id="icon-tasks" viewBox="0 0 24 24"><path d="m4 7 2 2 3-4M11 7h9M4 15l2 2 3-4M11 15h9"/></symbol>
+    <symbol id="icon-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 4v16M15 4v16"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.5 8.5 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v5h16v-5"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7z"/></symbol>
+    <symbol id="icon-reset" viewBox="0 0 24 24"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M5.5 15a8 8 0 0 0 13-5M18.5 9a8 8 0 0 0-13 5"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 5.1 3.2 8.4 7.5 10 4.3-1.6 7.5-4.9 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-5"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="メインメニュー">
+      <div class="brand"><img src="./favicon.svg" alt="" width="42" height="42"><div><p>IMPACT MAP</p><h1>要件変更<br>影響分析</h1></div></div>
+      <nav class="nav-list">
+        <button class="nav-item" data-view="overview" type="button"><svg class="icon"><use href="#icon-home"></use></svg><span>概要</span></button>
+        <button class="nav-item" data-view="input" type="button"><svg class="icon"><use href="#icon-input"></use></svg><span>要件入力</span></button>
+        <button class="nav-item" data-view="changes" type="button"><svg class="icon"><use href="#icon-diff"></use></svg><span>変更点</span><span class="nav-count" id="navChangeCount">0</span></button>
+        <button class="nav-item" data-view="impact" type="button"><svg class="icon"><use href="#icon-network"></use></svg><span>影響マップ</span></button>
+        <button class="nav-item" data-view="tasks" type="button"><svg class="icon"><use href="#icon-tasks"></use></svg><span>対応タスク</span><span class="nav-count" id="navTaskCount">0</span></button>
+        <button class="nav-item" data-view="trace" type="button"><svg class="icon"><use href="#icon-table"></use></svg><span>追跡・出力</span></button>
+      </nav>
+      <div class="sidebar-foot"><div class="privacy-card"><span><svg class="icon"><use href="#icon-lock"></use></svg></span><div><strong>端末内で分析</strong><small>入力内容は外部送信されません</small></div></div><p class="version">Local Impact Engine v1.0</p></div>
+    </aside>
+    <button class="sidebar-scrim" id="sidebarScrim" type="button" aria-label="メニューを閉じる"></button>
+
+    <main class="main-content">
+      <header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" id="mobileMenu" type="button" aria-label="メニューを開く"><svg class="icon"><use href="#icon-menu"></use></svg></button><div><p class="eyebrow" id="pageEyebrow">CHANGE INTELLIGENCE</p><h2 id="pageTitle">影響分析ダッシュボード</h2></div></div><div class="topbar-actions"><div class="status-pill"><span class="status-dot"></span><span id="projectStatus">デモ分析済み</span></div><button class="icon-button" id="themeToggle" type="button" aria-label="テーマを切り替える"><svg class="icon theme-icon-moon"><use href="#icon-moon"></use></svg><svg class="icon theme-icon-sun"><use href="#icon-sun"></use></svg></button></div></header>
+
+      <div class="page-stack">
+        <section class="view" data-view-panel="overview" aria-labelledby="overviewTitle">
+          <div class="hero-panel panel"><div class="hero-copy"><div class="hero-chip"><svg class="icon"><use href="#icon-sparkles"></use></svg>CHANGE INTELLIGENCE</div><h3 id="overviewTitle"><span id="heroProjectName">受注管理システム刷新</span>の<br><em>変更リスク</em>を可視化しました</h3><p>要件の差分から、設計・実装・テスト・運用までの影響を一枚で把握できます。</p><div class="hero-actions"><button class="primary-button" type="button" data-jump="changes">変更点を確認<svg class="icon"><use href="#icon-arrow"></use></svg></button><button class="secondary-button" type="button" data-jump="input">要件を入れ替える</button></div></div><div class="risk-orbit" aria-label="総合リスクスコア"><div class="orbit-ring ring-one"></div><div class="orbit-ring ring-two"></div><div class="risk-core"><span>RISK SCORE</span><strong id="overallRiskScore">0</strong><small id="overallRiskLabel">—</small></div><span class="orbit-node node-ui">UI</span><span class="orbit-node node-api">API</span><span class="orbit-node node-db">DB</span><span class="orbit-node node-test">TEST</span></div></div>
+          <div class="metric-grid" id="metricGrid"></div>
+          <div class="overview-grid">
+            <article class="panel content-panel"><div class="panel-heading"><div><p class="section-label">RISK PROFILE</p><h3>リスク構成</h3></div><span class="mini-badge" id="riskBadge">分析中</span></div><div class="risk-profile-content"><div class="radar-wrap"><svg id="riskRadar" viewBox="0 0 320 280" role="img" aria-label="リスクレーダーチャート"></svg></div><div class="risk-legend" id="riskLegend"></div></div></article>
+            <article class="panel content-panel"><div class="panel-heading"><div><p class="section-label">NEXT ACTIONS</p><h3>優先アクション</h3></div><span class="panel-icon"><svg class="icon"><use href="#icon-sparkles"></use></svg></span></div><ol class="recommendation-list" id="recommendationList"></ol></article>
+          </div>
+          <article class="panel content-panel top-changes"><div class="panel-heading"><div><p class="section-label">TOP CHANGES</p><h3>優先して確認する変更</h3></div><button class="text-button" type="button" data-jump="changes">すべて見る<svg class="icon"><use href="#icon-chevron"></use></svg></button></div><div class="top-change-list" id="topChangeList"></div></article>
+        </section>
+
+        <section class="view" data-view-panel="input" aria-labelledby="inputTitle">
+          <div class="section-toolbar"><div><p class="section-label">REQUIREMENT INPUT</p><h3 id="inputTitle">変更前と変更後の要件を入力</h3><p>文章・箇条書き・仕様メモをそのまま貼り付けられます。TXT / MDファイルにも対応します。</p></div><button class="secondary-button" id="loadSampleButton" type="button"><svg class="icon"><use href="#icon-play"></use></svg>サンプルを読み込む</button></div>
+          <form id="analysisForm" class="analysis-form">
+            <article class="panel project-settings"><div class="field-group field-wide"><label for="projectName">プロジェクト名</label><input id="projectName" name="projectName" type="text" maxlength="80" autocomplete="off" placeholder="例：受注管理システム刷新"></div><div class="field-group"><label for="releaseDate">リリース予定日</label><input id="releaseDate" name="releaseDate" type="date"></div><div class="field-group"><label for="changeCategory">変更カテゴリ</label><select id="changeCategory" name="changeCategory"><option>機能追加・仕様変更</option><option>法令・規約対応</option><option>性能・非機能変更</option><option>障害・緊急対応</option><option>UI改善</option></select></div></article>
+            <div class="requirement-editor-grid">
+              <article class="panel requirement-editor"><div class="editor-heading"><div><span class="version-tag version-before">BEFORE</span><h3>変更前の要件</h3></div><label class="file-button" for="oldFile"><svg class="icon"><use href="#icon-upload"></use></svg>ファイル</label><input class="visually-hidden" id="oldFile" type="file" accept=".txt,.md,.csv,text/plain,text/markdown,text/csv"></div><textarea id="oldText" name="oldText" spellcheck="false" placeholder="現在の要件・仕様を貼り付けてください"></textarea><div class="editor-foot"><span id="oldLineCount">0項目</span><span id="oldCharCount">0文字</span></div></article>
+              <div class="editor-arrow" aria-hidden="true"><svg class="icon"><use href="#icon-arrow"></use></svg></div>
+              <article class="panel requirement-editor"><div class="editor-heading"><div><span class="version-tag version-after">AFTER</span><h3>変更後の要件</h3></div><label class="file-button" for="newFile"><svg class="icon"><use href="#icon-upload"></use></svg>ファイル</label><input class="visually-hidden" id="newFile" type="file" accept=".txt,.md,.csv,text/plain,text/markdown,text/csv"></div><textarea id="newText" name="newText" spellcheck="false" placeholder="変更後の要件・仕様を貼り付けてください"></textarea><div class="editor-foot"><span id="newLineCount">0項目</span><span id="newCharCount">0文字</span></div></article>
+            </div>
+            <div class="analysis-submit-bar panel"><div class="analysis-note"><svg class="icon"><use href="#icon-lock"></use></svg><span><strong>ブラウザ内で完結</strong> 入力内容はサーバーに送信されません。</span></div><div class="submit-actions"><button class="ghost-button" id="resetButton" type="button"><svg class="icon"><use href="#icon-reset"></use></svg>クリア</button><button class="analyze-button" type="submit"><svg class="icon"><use href="#icon-sparkles"></use></svg><span>影響範囲を分析</span></button></div></div>
+          </form>
+        </section>
+
+        <section class="view" data-view-panel="changes" aria-labelledby="changesTitle">
+          <div class="section-toolbar"><div><p class="section-label">CHANGE DETECTION</p><h3 id="changesTitle">検出した変更点</h3><p id="changesDescription">追加・変更・削除された要件を、リスク順に整理します。</p></div><div class="toolbar-actions"><label class="search-box"><svg class="icon"><use href="#icon-search"></use></svg><input id="changeSearch" type="search" placeholder="変更点を検索"></label><select id="severityFilter" class="compact-select" aria-label="リスクで絞り込み"><option value="all">すべてのリスク</option><option value="high">高リスク</option><option value="medium">要注意</option><option value="low">低リスク</option></select></div></div>
+          <div class="change-summary-strip" id="changeSummaryStrip"></div><div class="change-list" id="changeList"></div><div class="empty-state panel" id="changeEmptyState" hidden><svg class="icon"><use href="#icon-search"></use></svg><h3>該当する変更がありません</h3><p>検索条件またはフィルターを変更してください。</p></div>
+        </section>
+
+        <section class="view" data-view-panel="impact" aria-labelledby="impactTitle">
+          <div class="section-toolbar"><div><p class="section-label">IMPACT NETWORK</p><h3 id="impactTitle">変更影響マップ</h3><p>変更要件が、どの設計・実装・テスト領域へ波及するかを可視化します。</p></div><button class="secondary-button" type="button" data-jump="trace"><svg class="icon"><use href="#icon-table"></use></svg>追跡表を見る</button></div>
+          <article class="panel impact-map-panel"><div class="impact-map-head"><div class="map-legend"><span><i class="legend-dot high"></i>高リスク</span><span><i class="legend-dot medium"></i>要注意</span><span><i class="legend-dot low"></i>低リスク</span></div><span class="map-hint">ノードを選択すると関連変更を表示</span></div><div class="impact-map" id="impactMap"></div></article>
+          <div class="impact-detail-grid"><article class="panel content-panel"><div class="panel-heading"><div><p class="section-label">AREA RANKING</p><h3>影響領域ランキング</h3></div></div><div class="impact-ranking" id="impactRanking"></div></article><article class="panel content-panel"><div class="panel-heading"><div><p class="section-label">SELECTED AREA</p><h3 id="selectedImpactTitle">影響領域を選択</h3></div><span class="panel-icon"><svg class="icon"><use href="#icon-network"></use></svg></span></div><div id="selectedImpactContent" class="selected-impact-content"></div></article></div>
+        </section>
+
+        <section class="view" data-view-panel="tasks" aria-labelledby="tasksTitle">
+          <div class="section-toolbar"><div><p class="section-label">ACTION PLAN</p><h3 id="tasksTitle">対応タスク</h3><p>影響領域ごとに、成果物・テスト観点・担当チームまで落とし込みます。</p></div><button class="primary-button" id="downloadTasksButton" type="button"><svg class="icon"><use href="#icon-download"></use></svg>CSV出力</button></div>
+          <article class="panel task-progress-panel"><div><p class="section-label">PROGRESS</p><h3><span id="taskDoneCount">0</span> / <span id="taskTotalCount">0</span> タスク完了</h3><p id="taskEstimateText">推定工数を計算中</p></div><div class="progress-ring" id="taskProgressRing"><span id="taskProgressPercent">0%</span></div><div class="task-progress-bar"><span id="taskProgressBar"></span></div></article><div class="task-board" id="taskBoard"></div>
+        </section>
+
+        <section class="view" data-view-panel="trace" aria-labelledby="traceTitle">
+          <div class="section-toolbar"><div><p class="section-label">TRACEABILITY & EXPORT</p><h3 id="traceTitle">トレーサビリティと報告書</h3><p>要件変更から成果物・テストケースまでを追跡し、そのまま共有資料にできます。</p></div><div class="export-menu"><button class="secondary-button" id="exportJsonButton" type="button">JSON</button><button class="secondary-button" id="exportCsvButton" type="button">CSV</button><button class="primary-button" id="exportMarkdownButton" type="button"><svg class="icon"><use href="#icon-download"></use></svg>報告書</button></div></div>
+          <article class="panel report-summary-card" id="reportSummaryCard"></article>
+          <article class="panel content-panel trace-table-panel"><div class="panel-heading"><div><p class="section-label">TRACEABILITY MATRIX</p><h3>変更－成果物－テスト追跡表</h3></div><span class="mini-badge" id="traceLinkCount">0 links</span></div><div class="table-scroll"><table class="trace-table"><thead><tr><th>変更ID</th><th>リスク</th><th>影響領域</th><th>更新成果物</th><th>テストケース</th><th>担当</th></tr></thead><tbody id="traceTableBody"></tbody></table></div></article>
+          <article class="panel content-panel report-preview-panel"><div class="panel-heading"><div><p class="section-label">REPORT PREVIEW</p><h3>影響分析レポート</h3></div><button class="text-button" id="copyReportButton" type="button"><svg class="icon"><use href="#icon-copy"></use></svg>コピー</button></div><div class="report-preview" id="reportPreview"></div></article>
+        </section>
+      </div>
+      <footer class="app-footer"><span>要件変更影響分析</span><span>Local-first • No upload • Open source ready</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#icon-check"></use></svg><span id="toastMessage">完了しました</span></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

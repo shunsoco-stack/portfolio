@@ -1,0 +1,10 @@
+{
+  "name":"要件変更影響分析",
+  "short_name":"影響分析",
+  "description":"要件の変更点から、画面・API・DB・テストへの影響範囲を整理します。",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#07111f",
+  "theme_color":"#6d5dfc",
+  "icons":[{"src":"/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
