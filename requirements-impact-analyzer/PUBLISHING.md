@@ -1,0 +1,1 @@
+The application has been merged into main. A production deployment exists, but Vercel deployment protection must be disabled for anonymous public access.
