@@ -1,0 +1,27 @@
+name: Merge Requirements Impact Analyzer
+
+on:
+  push:
+    branches:
+      - feat/requirements-impact-analyzer
+    paths:
+      - '.github/workflows/requirements-impact-analyzer-auto-merge.yml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge feature pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_NUMBER=$(gh pr list --repo '${{ github.repository }}' --head 'feat/requirements-impact-analyzer' --base main --state open --json number --jq '.[0].number')
+          if [ -z "$PR_NUMBER" ] || [ "$PR_NUMBER" = "null" ]; then
+            echo 'Open pull request was not found.'
+            exit 1
+          fi
+          gh pr merge "$PR_NUMBER" --repo '${{ github.repository }}' --merge --admin
